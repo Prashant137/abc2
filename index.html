@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nikku, Will You Be My Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #ffffff);
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 2.6rem;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #ff4d6d;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .countdown {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    ul {
+      text-align: left;
+      max-width: 520px;
+      margin: 30px auto;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      position: relative;
+      height: 140px;
+    }
+
+    button {
+      padding: 14px 28px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: #fff;
+    }
+
+    #noBtn {
+      background-color: #ddd;
+      position: absolute;
+      left: 50%;
+      top: 60px;
+      transform: translateX(-50%);
+    }
+
+    .final {
+      display: none;
+      margin-top: 50px;
+      font-size: 1.5rem;
+      color: #ff4d6d;
+    }
+
+    iframe {
+      margin-top: 20px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>Hey Nikku 👀❤️</h1>
+
+    <p>
+      I have a very serious and extremely important question.<br>
+      Please read till the end.<br>
+      <i>Your husband worked very hard on this.</i> 😌
+    </p>
+
+    <h2>⏳ Countdown to Our Valentine</h2>
+    <div class="countdown" id="countdown">Loading...</div>
+
+    <h2>🎵 Sound ON recommended</h2>
+    <iframe width="300" height="170"
+      src="https://www.youtube.com/embed/XwJkPI7IneI?mute=1&loop=1&playlist=XwJkPI7IneI"
+      allow="autoplay; encrypted-media">
+    </iframe>
+
+    <h2>Why you should say YES 😄</h2>
+    <ul>
+      <li>I already married you (this is just a renewal 😉)</li>
+      <li>Lifetime supply of hugs 🤗</li>
+      <li>Free emotional support + snacks 🍫</li>
+      <li>I’ll still pretend your jokes are funny 😄</li>
+      <li>I made a WEBSITE instead of just asking. Respect that.</li>
+    </ul>
+
+    <h2>Nikku… 💖</h2>
+    <p>
+      Life with you is my favorite thing.<br>
+      Every ordinary day feels special because of you.<br><br>
+      So even though we’re already forever…<br>
+      <b>will you still be my Valentine?</b> 💘
+    </p>
+
+    <div class="buttons">
+      <button id="yesBtn" onclick="yesClicked()">YES, OBVIOUSLY 💖</button>
+      <button id="noBtn">NO 😐</button>
+    </div>
+
+    <div class="final" id="finalMessage">
+      🎉 YAYYYY 💃❤️<br><br>
+      Officially Valentine-approved by Nikku<br><br>
+      Screenshot this.<br>
+      Show your husband.<br><br>
+      <b>He is VERY proud right now 😌</b>
+    </div>
+
+  </div>
+
+  <script>
+    // Countdown (auto-picks next Feb 14)
+    function getNextValentine() {
+      const now = new Date();
+      let year = now.getFullYear();
+      const valentines = new Date(`Feb 14, ${year} 00:00:00`);
+      if (now > valentines) year++;
+      return new Date(`Feb 14, ${year} 00:00:00`).getTime();
+    }
+
+    const target = getNextValentine();
+    const countdownEl = document.getElementById("countdown");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = target - now;
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      countdownEl.innerHTML = `${d}d ${h}h ${m}m ${s}s 💘`;
+    }, 1000);
+
+    // NO button runs away 😈
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // YES button
+    function yesClicked() {
+      document.getElementById("finalMessage").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>
