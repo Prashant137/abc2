@@ -24,7 +24,6 @@
   h1 {
     color: #ff4d6d;
     font-size: 2.7rem;
-    animation: fadeInDown 1s ease;
   }
 
   h2 {
@@ -35,7 +34,6 @@
   p {
     font-size: 1.1rem;
     line-height: 1.7;
-    animation: fadeIn 1.5s ease;
   }
 
   .countdown {
@@ -48,7 +46,6 @@
     text-align: left;
     max-width: 520px;
     margin: 30px auto;
-    padding-left: 20px;
   }
 
   li {
@@ -67,17 +64,11 @@
     border: none;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: transform 0.2s ease;
   }
 
   #yesBtn {
     background-color: #ff4d6d;
     color: #fff;
-    box-shadow: 0 8px 20px rgba(255,77,109,0.3);
-  }
-
-  #yesBtn:hover {
-    transform: scale(1.05);
   }
 
   #noBtn {
@@ -93,7 +84,6 @@
     margin-top: 60px;
     font-size: 1.6rem;
     color: #ff4d6d;
-    animation: fadeInUp 1s ease;
   }
 
   iframe {
@@ -101,7 +91,6 @@
     border-radius: 14px;
   }
 
-  /* Floating hearts */
   .heart {
     position: fixed;
     bottom: -20px;
@@ -110,7 +99,6 @@
     opacity: 0.7;
   }
 
-  /* Confetti */
   .confetti {
     position: fixed;
     width: 10px;
@@ -120,27 +108,11 @@
   }
 
   @keyframes floatUp {
-    from { transform: translateY(0); }
     to { transform: translateY(-110vh); }
   }
 
   @keyframes confettiFall {
     to { transform: translateY(110vh) rotate(720deg); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
@@ -166,10 +138,11 @@ allow="autoplay; encrypted-media"></iframe>
 
 <h2>Why you should say YES 😄</h2>
 <ul>
-  <li>I already married you (this is just a renewal 😉)</li>
+  <li>I already married you but treat u as my gf (this is an yearly renewal 😉)</li>
   <li>Lifetime supply of hugs 🤗</li>
   <li>Free emotional support + snacks 🍫</li>
   <li>I’ll still pretend your jokes are funny 😄</li>
+  <li>I have made  y shoulders big for u to sleep 😴</li>
   <li>I made a WEBSITE instead of just asking. Effort matters.</li>
 </ul>
 
@@ -201,8 +174,7 @@ Show your husband.<br><br>
   function nextValentine() {
     const now = new Date();
     let year = now.getFullYear();
-    const v = new Date(`Feb 14, ${year} 00:00:00`);
-    if (now > v) year++;
+    if (now > new Date(`Feb 14, ${year}`)) year++;
     return new Date(`Feb 14, ${year} 00:00:00`).getTime();
   }
 
@@ -211,18 +183,29 @@ Show your husband.<br><br>
 
   setInterval(() => {
     const diff = target - Date.now();
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff/(1000*60*60)) % 24);
-    const m = Math.floor((diff/(1000*60)) % 60);
-    const s = Math.floor((diff/1000) % 60);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff / 3600000) % 24);
+    const m = Math.floor((diff / 60000) % 60);
+    const s = Math.floor((diff / 1000) % 60);
     cd.innerHTML = `${d}d ${h}h ${m}m ${s}s 💘`;
   }, 1000);
 
-  // NO button escape
+  // NO button logic 😈➡️💖
   const noBtn = document.getElementById("noBtn");
+  let noAttempts = 0;
+
   noBtn.addEventListener("mouseover", () => {
-    noBtn.style.left = Math.random() * 80 + "%";
-    noBtn.style.top = Math.random() * 100 + "px";
+    noAttempts++;
+
+    if (noAttempts < 3) {
+      noBtn.style.left = Math.random() * 80 + "%";
+      noBtn.style.top = Math.random() * 100 + "px";
+    } else {
+      noBtn.innerText = "OK FINE, YES 💖";
+      noBtn.style.backgroundColor = "#ff4d6d";
+      noBtn.style.color = "#fff";
+      noBtn.onclick = yesClicked;
+    }
   });
 
   // YES clicked
@@ -238,7 +221,8 @@ Show your husband.<br><br>
       const c = document.createElement("div");
       c.className = "confetti";
       c.style.left = Math.random() * 100 + "vw";
-      c.style.backgroundColor = ["#ff4d6d","#ffd6e8","#ff9aa2","#fff"][Math.floor(Math.random()*4)];
+      c.style.backgroundColor =
+        ["#ff4d6d","#ffd6e8","#ff9aa2","#fff"][Math.floor(Math.random()*4)];
       document.body.appendChild(c);
       setTimeout(() => c.remove(), 3000);
     }
@@ -248,8 +232,8 @@ Show your husband.<br><br>
   setInterval(() => {
     const h = document.createElement("div");
     h.className = "heart";
-    h.style.left = Math.random() * 100 + "vw";
     h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 6000);
   }, 800);
